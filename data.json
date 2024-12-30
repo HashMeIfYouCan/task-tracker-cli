@@ -1,0 +1,15 @@
+{
+    "tasks": [
+        {
+            "id": 0,
+            "description": "Exaple description of the task",
+            "status": "todo",
+            "createdAt": "",
+            "updatedAt": ""
+        }
+    ],
+    "nextId": 1,
+    "numberOfTasks": 0,
+    "numberOfCompletedTasks": null,
+    "numberOfPendingTasks": null
+}
