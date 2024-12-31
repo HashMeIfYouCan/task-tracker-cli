@@ -25,12 +25,16 @@ def generate_task_id(tasks: List[Dict[str, Any]]) -> int:
 
 
 def help():
-    print("Usage: task-cli.py [command] [args]")
+    print("Usage: task-cli [command] [options]")
     print("\nCommands:")
-    print("  add <description>  Add a new task")
-    print("  list [status]      List tasks with optional status filter")
-    print("  delete <id>        Delete a task by ID")
-    print("  mark <id>          Mark a task as done by ID")
+    print("  add <description>         Add a new task")
+    print("  list [status]             List all tasks or tasks with specific status")
+    print("  update <id> <description> Update a task description")
+    print("  delete <id>               Delete a task")
+    print("  mark-todo <id>            Mark a task as todo")
+    print("  mark-in-progress <id>     Mark a task as in progress")
+    print("  mark-done <id>            Mark a task as done")
+    print("  --help                    Show help")
 
 
 def add_task(description: str) -> None:
@@ -140,6 +144,9 @@ def main():
         print("--Insufficient arguments, see help--")
         help()
         return
+    
+    if sys.argv[1] == Command.HELP:
+        help()
     
     elif sys.argv[1] == Command.ADD:
         if len(sys.argv) < 3:

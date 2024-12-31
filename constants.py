@@ -9,6 +9,7 @@ class Command:
     DELETE = "delete"
     UPDATE = "update"
     MARK = "mark"
+    HELP = "--help"
 
 class Task:
     ID = "id"
