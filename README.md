@@ -68,8 +68,6 @@ task_cli [command] [options]
     ```
 
 ## Project URL
-[Task Tracker Project](https://roadmap.sh/projects/task-tracker)
-
-```sh
-
-```
+     ```sh
+    [Task Tracker Project](https://roadmap.sh/projects/task-tracker)
+     ```
