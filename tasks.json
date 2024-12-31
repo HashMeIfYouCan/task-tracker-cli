@@ -8,16 +8,16 @@
     },
     {
         "id": 4,
-        "description": "Test description",
-        "status": "in-progress",
+        "description": "Don't eat non-vegge today",
+        "status": "done",
         "createdAt": "31/12/2024 15:50:43",
-        "updatedAt": null
+        "updatedAt": "01-01-2025 00:51:17"
     },
     {
         "id": 5,
         "description": "eat brunch for dinner",
-        "status": "todo",
+        "status": "in-progress",
         "createdAt": "31-12-2024 20:47:24",
-        "updatedAt": null
+        "updatedAt": "01-01-2025 00:52:02"
     }
 ]

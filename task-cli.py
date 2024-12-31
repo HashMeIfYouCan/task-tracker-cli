@@ -76,9 +76,9 @@ def list_tasks(status: str = None) -> None:
 
 def get_task_index(task_id: int, tasks: List[Dict[str, Any]]) -> int:
     for task_index, task in enumerate(tasks):
-        id_index = task_index if task[Task.ID] == task_id else -1
-    
-    return id_index
+        if task[Task.ID] == task_id:
+            return task_index
+    return -1
 
 
 def update_task_description(task_id: int, new_description: str) -> None:
@@ -88,6 +88,10 @@ def update_task_description(task_id: int, new_description: str) -> None:
 
     if task_index == -1:
         print(f"Task with ID {task_id} not found")
+        return
+
+    if tasks[task_index][Task.STATUS] == Status.DONE:
+        print(f"Task with ID {task_id} is already marked as done")
         return
     
     tasks[task_index][Task.DESCRIPTION] = new_description
@@ -112,6 +116,23 @@ def delete_task(task_id: int) -> None:
     save_tasks(tasks)
 
     print(f"Task with ID {task_id} deleted successfully")
+
+
+def mark_task(task_id: int, status: str) -> None:
+    tasks: List[Dict[str, Any]] = load_tasks()
+
+    task_index: int = get_task_index(task_id, tasks)
+
+    if task_index == -1:
+        print(f"Task with ID {task_id} not found")
+        return
+
+    tasks[task_index][Task.STATUS] = status
+    tasks[task_index][Task.UPDATED_AT] = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+
+    save_tasks(tasks)
+
+    print(f"Task with ID {task_id} marked as {status}")
 
 
 def main():
@@ -144,11 +165,16 @@ def main():
             return
         update_task_description(int(sys.argv[2]), sys.argv[3])
     
-    elif sys.argv[1] == Command.MARK:
+    elif sys.argv[1][:4] == Command.MARK:
         if len(sys.argv) < 3:
-            print("Task ID is missing")
+            print("Task ID or status is missing")
             help()
             return
+        if sys.argv[1][5:] not in [Status.TODO, Status.IN_PROGRESS, Status.DONE]:
+            print("Status is not identified, see help")
+            help()
+            return
+        mark_task(int(sys.argv[2]), sys.argv[1][5:])
     
     else:
         print("Command is not identified, see help")
