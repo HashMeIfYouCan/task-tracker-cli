@@ -156,7 +156,13 @@ def main():
         add_task(sys.argv[2])
     
     elif sys.argv[1] == Command.LIST:
-        list_tasks(sys.argv[2] if len(sys.argv) == 3 else None)
+        if len(sys.argv) < 2:
+            list_tasks()
+        else:
+            if sys.argv[2] not in [Status.TODO, Status.IN_PROGRESS, Status.DONE]:
+                print("Status is not identified, see help")
+                help()
+                return
     
     elif sys.argv[1] == Command.DELETE:
         if len(sys.argv) < 3:
@@ -177,7 +183,7 @@ def main():
             print("Task ID or status is missing")
             help()
             return
-        if sys.argv[1][5:] not in [Status.TODO, Status.IN_PROGRESS, Status.DONE]:
+        if sys.argv[1][5:]:
             print("Status is not identified, see help")
             help()
             return
