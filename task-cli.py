@@ -76,7 +76,9 @@ def list_tasks(status: str = None) -> None:
 
 def get_task_index(task_id: int, tasks: List[Dict[str, Any]]) -> int:
     for task_index, task in enumerate(tasks):
-        return task_index if task[Task.ID] == task_id else -1
+        id_index = task_index if task[Task.ID] == task_id else -1
+    
+    return id_index
 
 
 def update_task_description(task_id: int, new_description: str) -> None:
