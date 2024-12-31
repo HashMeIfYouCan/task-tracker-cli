@@ -44,9 +44,22 @@ def add_task(description: str) -> None:
 
 def main():
     if len(sys.argv) < 2:
-        return help()
+        print("--Insufficient arguments, see help--")
+        help()
+        return
+    elif sys.argv[1] == Command.ADD:
+        add_task(sys.argv[2])
+    elif sys.argv[1] == Command.LIST:
+        ...
+    elif sys.argv[1] == Command.DELETE:
+        ...
+    elif sys.argv[1] == Command.MARK:
+        ...
+    else:
+        print("Command is not identifies, see help")
+        help()
     
 
 
 if __name__ == '__main__':
-    add_task(description="Test description")
+    main()

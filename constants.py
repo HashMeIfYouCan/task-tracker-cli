@@ -6,6 +6,7 @@ class Status:
 class Command:
     ADD = "add"
     LIST = "list"
+    DELETE = "delete"
     MARK = "mark"
 
 class Task:
