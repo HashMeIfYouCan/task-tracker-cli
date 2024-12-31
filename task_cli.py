@@ -66,10 +66,12 @@ def list_tasks(status: str = None) -> None:
 
     len_largest_description: int = max((len(task[Task.DESCRIPTION]) for task in tasks), default=0)
 
+    # Print table header
     print(f"{'-' * (70 + len_largest_description)}")
     print(f"| {'ID':<5} | {'Description':<{len_largest_description}} | {'Status':<11} | {'Created At':<19} | {'Updated At':<19} |")
     print(f"{'-' * (70 + len_largest_description)}")
 
+    # Print each task in the table
     for task in filtered_tasks:
         print(f"| {task[Task.ID]:<5} | {task[Task.DESCRIPTION]:<{len_largest_description}} "
               f"| {task[Task.STATUS]:<11} | {task[Task.CREATED_AT]:<19} "
