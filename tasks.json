@@ -1,13 +1,13 @@
 [
     {
-        "id": 2,
-        "description": "test description",
+        "id": 3,
+        "description": "New description",
         "status": "todo",
         "createdAt": "31/12/2024  14:50:43",
-        "updatedAt": null
+        "updatedAt": "31-12-2024 20:43:02"
     },
     {
-        "id": 3,
+        "id": 4,
         "description": "Test description",
         "status": "in-progress",
         "createdAt": "31/12/2024  15:50:43",

@@ -37,7 +37,7 @@ def add_task(description: str) -> None:
     tasks: List[Dict[str, Any]] = load_tasks()
 
     task_id: int = generate_task_id(tasks)
-    time_now: str = datetime.now().isoformat()
+    time_now: str = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
 
     new_task: dict = {
         Task.ID: task_id,
@@ -74,6 +74,44 @@ def list_tasks(status: str = None) -> None:
     print(f"{'-' * (70 + len_largest_description)}")
 
 
+def get_task_index(task_id: int, tasks: List[Dict[str, Any]]) -> int:
+    for task_index, task in enumerate(tasks):
+        return task_index if task[Task.ID] == task_id else -1
+
+
+def update_task_description(task_id: int, new_description: str) -> None:
+    tasks: List[Dict[str, Any]] = load_tasks()
+
+    task_index: int = get_task_index(task_id, tasks)
+
+    if task_index == -1:
+        print(f"Task with ID {task_id} not found")
+        return
+    
+    tasks[task_index][Task.DESCRIPTION] = new_description
+    tasks[task_index][Task.UPDATED_AT] = datetime.now().strftime('%d-%m-%Y %H:%M:%S')
+
+    save_tasks(tasks)
+
+    print(f"Task with ID {task_id} updated successfully")
+
+
+def delete_task(task_id: int) -> None:
+    tasks: List[Dict[str, Any]] = load_tasks()
+
+    task_index: int = get_task_index(task_id, tasks)
+
+    if task_index == -1:
+        print(f"Task with ID {task_id} not found")
+        return
+
+    del tasks[task_index]
+
+    save_tasks(tasks)
+
+    print(f"Task with ID {task_id} deleted successfully")
+
+
 def main():
     if len(sys.argv) < 2:
         print("--Insufficient arguments, see help--")
@@ -81,7 +119,7 @@ def main():
         return
     
     elif sys.argv[1] == Command.ADD:
-        if len(sys.argv) == 3:
+        if len(sys.argv) < 3:
             print("Task description is missing")
             help()
             return
@@ -91,13 +129,21 @@ def main():
         list_tasks(sys.argv[2] if len(sys.argv) == 3 else None)
     
     elif sys.argv[1] == Command.DELETE:
-        if len(sys.argv) == 3:
+        if len(sys.argv) < 3:
             print("Task ID is missing")
             help()
             return
+        delete_task(int(sys.argv[2]))
+    
+    elif sys.argv[1] == Command.UPDATE:
+        if len(sys.argv) < 4:
+            print("Task ID or new description is missing")
+            help()
+            return
+        update_task_description(int(sys.argv[2]), sys.argv[3])
     
     elif sys.argv[1] == Command.MARK:
-        if len(sys.argv) == 3:
+        if len(sys.argv) < 3:
             print("Task ID is missing")
             help()
             return
@@ -105,7 +151,6 @@ def main():
     else:
         print("Command is not identified, see help")
         help()
-    
 
 
 if __name__ == '__main__':

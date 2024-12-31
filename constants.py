@@ -7,6 +7,7 @@ class Command:
     ADD = "add"
     LIST = "list"
     DELETE = "delete"
+    UPDATE = "update"
     MARK = "mark"
 
 class Task:
