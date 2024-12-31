@@ -1,28 +1,10 @@
 import json
 import sys
-from enum import Enum
 from datetime import datetime
 from typing import List, Dict, Any
+from constants import Task, Command, Status
 
 TASK_FILE = 'tasks.json'
-
-class Status(Enum):
-    TODO = "todo"
-    IN_PROGRESS = "in-progress"
-    DONE = "done"
-
-class Command(Enum):
-    ADD = "add"
-    LIST = "list"
-    MARK = "mark"
-    HELP = "--help"
-
-class Task(Enum):
-    ID = "id"
-    DESCRIPTION = "description"
-    STATUS = "status"
-    CREATED_AT = "createdAt"
-    UPDATED_AT = "updatedAt"
 
 
 def load_tasks() -> List[Dict[str, Any]]:
@@ -46,14 +28,14 @@ def add_task(description: str) -> None:
     tasks: List[Dict[str, Any]] = load_tasks()
 
     task_id: int = generate_task_id(tasks)
-    time_now: str = datetime.now().strftime("%d/%m/%Y  %H:%M:%S")
+    time_now: str = datetime.now().isoformat()
 
     new_task: dict = {
-        Task.ID.value: task_id,
-        Task.DESCRIPTION.value: description,
-        Task.STATUS.value: Status.TODO.value,
-        Task.CREATED_AT.value: time_now,
-        Task.UPDATED_AT.value: None
+        Task.ID: task_id,
+        Task.DESCRIPTION: description,
+        Task.STATUS: Status.TODO,
+        Task.CREATED_AT: time_now,
+        Task.UPDATED_AT: None
     }
 
     tasks.append(new_task)
@@ -61,9 +43,10 @@ def add_task(description: str) -> None:
     save_tasks(tasks)
 
 def main():
-    ...
+    if len(sys.argv) < 2:
+        return help()
     
 
 
 if __name__ == '__main__':
-    add_task(input())
+    add_task(description="Test description")
