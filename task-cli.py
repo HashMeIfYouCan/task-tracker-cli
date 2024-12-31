@@ -1,5 +1,4 @@
 import json
-import argparse
 import sys
 from enum import Enum
 from datetime import datetime
@@ -16,6 +15,7 @@ class Command(Enum):
     ADD = "add"
     LIST = "list"
     MARK = "mark"
+    HELP = "--help"
 
 class Task(Enum):
     ID = "id"
@@ -39,11 +39,14 @@ def save_tasks(tasks: List[Dict[str, Any]]) -> None:
 def generate_task_id(tasks: List[Dict[str, Any]]) -> int:
     return max((task['id'] for task in tasks), default=1) + 1
 
+def help():
+    ...
+
 def add_task(description: str) -> None:
     tasks: List[Dict[str, Any]] = load_tasks()
 
     task_id: int = generate_task_id(tasks)
-    time_now: str = datetime.now().isoformat()
+    time_now: str = datetime.now().strftime("%d/%m/%Y  %H:%M:%S")
 
     new_task: dict = {
         Task.ID.value: task_id,
@@ -57,4 +60,10 @@ def add_task(description: str) -> None:
 
     save_tasks(tasks)
 
+def main():
+    ...
+    
 
+
+if __name__ == '__main__':
+    add_task(input())
