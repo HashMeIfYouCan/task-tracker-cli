@@ -21,7 +21,7 @@ def save_tasks(tasks: List[Dict[str, Any]]) -> None:
 
 
 def generate_task_id(tasks: List[Dict[str, Any]]) -> int:
-    return max((task['id'] for task in tasks), default=1) + 1
+    return max((task['id'] for task in tasks), default=0) + 1
 
 
 def help():

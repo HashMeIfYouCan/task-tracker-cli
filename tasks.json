@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "description": "Eat breakfast at 8 am",
+        "status": "done",
+        "createdAt": "01-01-2025 01:35:22",
+        "updatedAt": "01-01-2025 01:38:36"
+    },
+    {
+        "id": 2,
+        "description": "Call someone at 10 am",
+        "status": "in-progress",
+        "createdAt": "01-01-2025 01:35:46",
+        "updatedAt": "01-01-2025 01:39:02"
+    },
+    {
+        "id": 3,
+        "description": "Meeting with clients at 1:30pm",
+        "status": "todo",
+        "createdAt": "01-01-2025 01:36:28",
+        "updatedAt": "01-01-2025 01:37:42"
+    }
+]
