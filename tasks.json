@@ -9,8 +9,8 @@
     {
         "id": 3,
         "description": "Test description",
-        "status": "todo",
-        "createdAt": "2024-12-31T18:11:14.536753",
+        "status": "in-progress",
+        "createdAt": "31/12/2024  15:50:43",
         "updatedAt": null
     }
 ]

@@ -13,16 +13,25 @@ def load_tasks() -> List[Dict[str, Any]]:
             return json.load(file)
     except (FileNotFoundError, json.JSONDecodeError):
         return []
-    
+
+
 def save_tasks(tasks: List[Dict[str, Any]]) -> None:
     with open(TASK_FILE, 'w') as file:
         json.dump(tasks, file, indent=4)
 
+
 def generate_task_id(tasks: List[Dict[str, Any]]) -> int:
     return max((task['id'] for task in tasks), default=1) + 1
 
+
 def help():
-    ...
+    print("Usage: task-cli.py [command] [args]")
+    print("\nCommands:")
+    print("  add <description>  Add a new task")
+    print("  list [status]      List tasks with optional status filter")
+    print("  delete <id>        Delete a task by ID")
+    print("  mark <id>          Mark a task as done by ID")
+
 
 def add_task(description: str) -> None:
     tasks: List[Dict[str, Any]] = load_tasks()
@@ -42,21 +51,59 @@ def add_task(description: str) -> None:
 
     save_tasks(tasks)
 
+
+def list_tasks(status: str = None) -> None:
+    tasks: List[Dict[str, Any]] = load_tasks()
+
+    if status is None:
+        filtered_tasks: List[Dict[str, Any]] = tasks
+    else:
+        filtered_tasks: List[Dict[str, Any]] = [task for task in tasks if task[Task.STATUS] == status]
+
+    len_largest_description: int = max((len(task[Task.DESCRIPTION]) for task in tasks), default=0)
+
+    print(f"{'-' * (70 + len_largest_description)}")
+    print(f"| {'ID':<5} | {'Description':<{len_largest_description}} | {'Status':<11} | {'Created At':<19} | {'Updated At':<19} |")
+    print(f"{'-' * (70 + len_largest_description)}")
+
+    for task in filtered_tasks:
+        print(f"| {task[Task.ID]:<5} | {task[Task.DESCRIPTION]:<{len_largest_description}} "
+              f"| {task[Task.STATUS]:<11} | {task[Task.CREATED_AT]:<19} "
+              f"| {(task[Task.UPDATED_AT] if task[Task.UPDATED_AT] else 'No Update'):<19} |")
+
+    print(f"{'-' * (70 + len_largest_description)}")
+
+
 def main():
     if len(sys.argv) < 2:
         print("--Insufficient arguments, see help--")
         help()
         return
+    
     elif sys.argv[1] == Command.ADD:
+        if len(sys.argv) == 3:
+            print("Task description is missing")
+            help()
+            return
         add_task(sys.argv[2])
+    
     elif sys.argv[1] == Command.LIST:
-        ...
+        list_tasks(sys.argv[2] if len(sys.argv) == 3 else None)
+    
     elif sys.argv[1] == Command.DELETE:
-        ...
+        if len(sys.argv) == 3:
+            print("Task ID is missing")
+            help()
+            return
+    
     elif sys.argv[1] == Command.MARK:
-        ...
+        if len(sys.argv) == 3:
+            print("Task ID is missing")
+            help()
+            return
+    
     else:
-        print("Command is not identifies, see help")
+        print("Command is not identified, see help")
         help()
     
 
